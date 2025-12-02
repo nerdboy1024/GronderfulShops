@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Checkout - GronderfulBlogs">
+    <title>Checkout - GronderfulBlogs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="checkout.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="moon-icon">☾</span>
+                <h1><a href="index.html">GronderfulBlogs</a></h1>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <h1 class="page-title">Secure Checkout</h1>
+
+            <!-- Progress Steps -->
+            <div class="checkout-progress">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Shipping</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Payment</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Confirm</div>
+                </div>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Checkout Forms -->
+                <div class="checkout-forms">
+                    <!-- Step 1: Shipping -->
+                    <div class="checkout-step" id="step1" style="display: block;">
+                        <h2 class="step-title">Shipping Information</h2>
+                        <form id="shippingForm" class="checkout-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" id="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" id="lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Street Address *</label>
+                                <input type="text" id="address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address2">Apartment, Suite, etc. (optional)</label>
+                                <input type="text" id="address2">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City *</label>
+                                    <input type="text" id="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State/Province *</label>
+                                    <input type="text" id="state" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP/Postal Code *</label>
+                                    <input type="text" id="zipCode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country *</label>
+                                    <select id="country" required>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="saveAddress">
+                                    Save this address for future orders
+                                </label>
+                            </div>
+                            <button type="submit" class="btn-next">Continue to Payment</button>
+                        </form>
+                    </div>
+
+                    <!-- Step 2: Payment -->
+                    <div class="checkout-step" id="step2" style="display: none;">
+                        <h2 class="step-title">Payment Information</h2>
+                        <div class="payment-notice">
+                            <div class="notice-icon">🔒</div>
+                            <div>
+                                <strong>Secure Payment Processing</strong>
+                                <p>Enter your payment token below. Your payment information is encrypted and secure.</p>
+                            </div>
+                        </div>
+                        <form id="paymentForm" class="checkout-form">
+                            <div class="form-group">
+                                <label for="paymentToken">Payment Token *</label>
+                                <input type="text" id="paymentToken" placeholder="tok_XXXXXXXXXXXX" required>
+                                <small>Enter the payment token provided by your payment processor</small>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="billingAddressSame" checked>
+                                    Billing address same as shipping
+                                </label>
+                            </div>
+                            <div id="billingAddressFields" style="display: none;">
+                                <!-- Billing address fields would go here -->
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-back" onclick="goToStep(1)">Back</button>
+                                <button type="submit" class="btn-next">Review Order</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 3: Review & Confirm -->
+                    <div class="checkout-step" id="step3" style="display: none;">
+                        <h2 class="step-title">Review Your Order</h2>
+                        <div class="review-section">
+                            <h3>Shipping Address</h3>
+                            <div id="reviewShipping" class="review-info"></div>
+                        </div>
+                        <div class="review-section">
+                            <h3>Payment Method</h3>
+                            <div id="reviewPayment" class="review-info"></div>
+                        </div>
+                        <div class="review-section">
+                            <h3>Order Items</h3>
+                            <div id="reviewItems" class="review-items"></div>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="termsAgree" required>
+                                I agree to the <a href="#">Terms & Conditions</a>
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-back" onclick="goToStep(2)">Back</button>
+                            <button type="button" class="btn-place-order" id="placeOrderBtn">
+                                Place Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="order-summary-sidebar">
+                    <h2 class="summary-title">Order Summary</h2>
+                    <div id="summaryItems" class="summary-items"></div>
+                    <div class="summary-totals" id="summaryTotals"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing your order...</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="checkout.js"></script>
+</body>
+</html>

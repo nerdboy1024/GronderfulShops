@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Preferences - GronderfulBlogs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        .prefs-container {
+            min-height: 100vh;
+            padding: 6rem 2rem 2rem;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0a0014 100%);
+        }
+
+        .prefs-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .prefs-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .prefs-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .prefs-header p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .prefs-section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .prefs-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+        }
+
+        .radio-group, .checkbox-group-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .radio-item, .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-item:hover, .checkbox-item:hover {
+            border-color: var(--primary-purple);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .radio-item input, .checkbox-item input {
+            cursor: pointer;
+        }
+
+        .radio-item label, .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            color: var(--text-gray);
+        }
+
+        .multi-select-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label {
+            color: var(--text-light);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-purple);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .message.error {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid #dc2626;
+            color: #fca5a5;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+            color: #86efac;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="moon-icon">☾</span>
+                <h1>GronderfulBlogs</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/preferences.html">My Preferences</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="prefs-container">
+        <div class="prefs-box">
+            <div class="prefs-header">
+                <h1>My Preferences</h1>
+                <p>Personalize your magical journey</p>
+            </div>
+
+            <div id="messageContainer" class="message"></div>
+
+            <form id="preferencesForm">
+                <!-- Personal Info -->
+                <div class="prefs-section">
+                    <h2 class="section-title">Personal Information</h2>
+
+                    <div class="form-group">
+                        <label for="birthday">Birthday (Month & Day only)</label>
+                        <input type="text" id="birthday" placeholder="MM-DD (e.g., 07-14)">
+                        <small style="color: var(--text-gray); font-size: 0.85rem;">We only store month/day for astrology & birthday promos</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" placeholder="Your city">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" placeholder="Your country">
+                    </div>
+                </div>
+
+                <!-- Experience Level -->
+                <div class="prefs-section">
+                    <h2 class="section-title">Experience Level</h2>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="beginner" name="experienceLevel" value="beginner">
+                            <label for="beginner">Beginner - Just starting my journey</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="intermediate" name="experienceLevel" value="intermediate">
+                            <label for="intermediate">Intermediate - Practiced for a while</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="advanced" name="experienceLevel" value="advanced">
+                            <label for="advanced">Advanced - Experienced practitioner</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Traditions -->
+                <div class="prefs-section">
+                    <h2 class="section-title">Traditions & Interests</h2>
+                    <label>Which traditions resonate with you?</label>
+                    <div class="checkbox-group-container multi-select-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-witchcraft" value="witchcraft">
+                            <label for="trad-witchcraft">Witchcraft (Eclectic)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-wicca" value="wicca">
+                            <label for="trad-wicca">Wicca</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-hermeticism" value="hermeticism">
+                            <label for="trad-hermeticism">Hermeticism</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-chaos" value="chaos-magic">
+                            <label for="trad-chaos">Chaos Magic</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-hoodoo" value="hoodoo">
+                            <label for="trad-hoodoo">Hoodoo</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-folk" value="folk-magic">
+                            <label for="trad-folk">Folk Magic</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-tarot" value="tarot">
+                            <label for="trad-tarot">Tarot</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="trad-astrology" value="astrology">
+                            <label for="trad-astrology">Astrology</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Interests -->
+                <div class="prefs-section">
+                    <h2 class="section-title">Favorite Product Types</h2>
+                    <label>What are you most interested in?</label>
+                    <div class="checkbox-group-container multi-select-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-candles" value="candles">
+                            <label for="prod-candles">Candles</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-oils" value="oils">
+                            <label for="prod-oils">Oils</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-herbs" value="herbs">
+                            <label for="prod-herbs">Herbs</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-crystals" value="crystals">
+                            <label for="prod-crystals">Crystals</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-tarot" value="tarot-decks">
+                            <label for="prod-tarot">Tarot Decks</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-altars" value="altars">
+                            <label for="prod-altars">Altar Supplies</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-books" value="books">
+                            <label for="prod-books">Books/Grimoire</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="prod-courses" value="courses">
+                            <label for="prod-courses">Courses</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Preferences -->
+                <div class="prefs-section">
+                    <h2 class="section-title">Marketing Preferences</h2>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Email marketing opt-in</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="emailOptIn">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">SMS marketing opt-in</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="smsOptIn">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Allow tracking for personalization</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="trackingOptIn">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailFrequency">Email frequency</label>
+                        <select id="emailFrequency">
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="important-only">Important updates only</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Community -->
+                <div class="prefs-section">
+                    <h2 class="section-title">Community & Events</h2>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Subscribe to blog</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="blogSubscription">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Interested in workshops & events</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="workshopInterest">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="save-btn">Save Preferences</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/preferences.js"></script>
+</body>
+</html>

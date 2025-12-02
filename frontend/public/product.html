@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Product Details - GronderfulBlogs">
+    <title>Product - GronderfulBlogs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="product.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="moon-icon">☾</span>
+                <h1><a href="index.html">GronderfulBlogs</a></h1>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#shop">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="index.html#shows">Shows</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="cart.html" class="cart-link">
+                    <span>Cart</span>
+                    <span class="cart-count" id="navCartCount">0</span>
+                </a></li>
+                <li><a href="account.html" class="account-link" id="accountLink">Account</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> /
+                <a href="index.html#shop">Shop</a> /
+                <span id="breadcrumbCategory">...</span> /
+                <span id="breadcrumbProduct">...</span>
+            </div>
+
+            <div class="product-content" id="productContent">
+                <!-- Loading state -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading product...</p>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-products" id="relatedProductsSection" style="display: none;">
+                <h2>You May Also Like</h2>
+                <div class="related-grid" id="relatedGrid"></div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="reviews-section" id="reviewsSection" style="display: none;">
+                <h2>Customer Reviews</h2>
+
+                <div class="reviews-summary" id="reviewsSummary"></div>
+
+                <div class="add-review-section">
+                    <h3>Write a Review</h3>
+                    <form id="reviewForm" class="review-form">
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <div class="star-rating-input" id="starRatingInput">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                            </div>
+                            <input type="hidden" id="reviewRating" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewTitle">Review Title</label>
+                            <input type="text" id="reviewTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewText">Your Review</label>
+                            <textarea id="reviewText" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+
+                <div class="reviews-list" id="reviewsList"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>☾ GronderfulBlogs</h3>
+                    <p>Where magic meets mystery</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#shop">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow the Journey</h4>
+                    <div class="social-links">
+                        <a href="#" target="_blank">TikTok</a>
+                        <a href="#" target="_blank">Instagram</a>
+                        <a href="#" target="_blank">YouTube</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GronderfulBlogs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="product.js"></script>
+</body>
+</html>

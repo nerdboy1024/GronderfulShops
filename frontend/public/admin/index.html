@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>War Room - GronderfulBlogs Admin</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Admin Styles -->
+    <link rel="stylesheet" href="/admin/admin.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Quill WYSIWYG Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="war-room-icon">⚔️</div>
+                <h1>War Room</h1>
+                <p>GronderfulBlogs Administration</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        class="form-input"
+                        placeholder="admin@YOUR_DOMAIN.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        class="form-input"
+                        placeholder="••••••••"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span class="btn-text">Enter War Room</span>
+                    <span class="btn-loading" style="display: none;">
+                        <span class="spinner"></span>
+                        Authenticating...
+                    </span>
+                </button>
+
+                <div id="loginError" class="error-message" style="display: none;"></div>
+            </form>
+
+            <div class="login-footer">
+                <p>Protected by Firebase Authentication</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">⚔️</span>
+                    <span class="logo-text">War Room</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#products" class="nav-item" data-section="products">
+                    <span class="nav-icon">🔮</span>
+                    <span class="nav-text">Products</span>
+                </a>
+                <a href="#blog" class="nav-item" data-section="blog">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Blog Posts</span>
+                </a>
+                <a href="#categories" class="nav-item" data-section="categories">
+                    <span class="nav-icon">🏷️</span>
+                    <span class="nav-text">Categories</span>
+                </a>
+                <a href="#orders" class="nav-item" data-section="orders">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Orders</span>
+                    <span class="nav-badge" id="ordersBadge" style="display: none;">0</span>
+                </a>
+                <a href="#users" class="nav-item" data-section="users">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Users</span>
+                </a>
+                <a href="#segments" class="nav-item" data-section="segments">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Segments</span>
+                </a>
+                <a href="#media" class="nav-item" data-section="media">
+                    <span class="nav-icon">🖼️</span>
+                    <span class="nav-text">Media Library</span>
+                </a>
+                <a href="#vendors" class="nav-item admin-only" data-section="vendors" data-role-required="GronderfulBlogs">
+                    <span class="nav-icon">🏪</span>
+                    <span class="nav-text">Vendors</span>
+                </a>
+                <a href="#baseProducts" class="nav-item admin-only" data-section="baseProducts" data-role-required="GronderfulBlogs">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Base Products</span>
+                </a>
+
+                <!-- Site Settings Section -->
+                <div class="nav-divider"></div>
+                <a href="#siteIdentity" class="nav-item admin-only" data-section="siteIdentity" data-role-required="GronderfulBlogs">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Site Identity</span>
+                </a>
+                <a href="#templates" class="nav-item admin-only" data-section="templates" data-role-required="GronderfulBlogs">
+                    <span class="nav-icon">🎭</span>
+                    <span class="nav-text">Templates</span>
+                </a>
+                <a href="#modules" class="nav-item admin-only" data-section="modules" data-role-required="GronderfulBlogs">
+                    <span class="nav-icon">🧩</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-email" id="userEmail"></div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn-logout">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="header-actions">
+                    <button id="headerActionBtn" class="btn btn-primary" style="display: none;">
+                        <span id="headerActionText">+ Add New</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <!-- Dashboard Section -->
+                <section id="dashboardSection" class="content-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🔮</div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="statProducts">0</div>
+                                <div class="stat-label">Total Products</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">📝</div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="statPosts">0</div>
+                                <div class="stat-label">Blog Posts</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="statOrders">0</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="statRevenue">$0</div>
+                                <div class="stat-label">Revenue</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <h3>Recent Orders</h3>
+                            <div id="recentOrders" class="recent-orders-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <h3>Low Stock Alert</h3>
+                            <div id="lowStock" class="low-stock-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="productsSection" class="content-section">
+                    <div id="productsTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Blog Section -->
+                <section id="blogSection" class="content-section">
+                    <div id="blogTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Categories Section -->
+                <section id="categoriesSection" class="content-section">
+                    <div id="categoriesTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section id="ordersSection" class="content-section">
+                    <div id="ordersTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Users Section -->
+                <section id="usersSection" class="content-section">
+                    <div class="section-toolbar">
+                        <div class="toolbar-left">
+                            <select id="userRoleFilter" class="form-select">
+                                <option value="all">All Roles</option>
+                                <option value="GronderfulBlogs">Admin</option>
+                                <option value="customer">Customer</option>
+                                <option value="contributor">Contributor</option>
+                                <option value="affiliate">Affiliate</option>
+                            </select>
+                            <select id="userOptInFilter" class="form-select">
+                                <option value="all">All Users</option>
+                                <option value="email">Email Opted In</option>
+                                <option value="sms">SMS Opted In</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-right">
+                            <input type="text" id="userSearch" class="form-input" placeholder="Search users...">
+                        </div>
+                    </div>
+                    <div id="usersTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Segments Section -->
+                <section id="segmentsSection" class="content-section">
+                    <div class="segments-grid" id="segmentsGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Media Library Section -->
+                <section id="mediaSection" class="content-section">
+                    <div id="mediaGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Vendors Section -->
+                <section id="vendorsSection" class="content-section">
+                    <div class="section-toolbar">
+                        <div class="toolbar-left">
+                            <h3>Manage Vendors</h3>
+                        </div>
+                        <div class="toolbar-right">
+                            <button id="addVendorBtn" class="btn btn-primary">
+                                + Add Vendor
+                            </button>
+                        </div>
+                    </div>
+                    <div id="vendorsTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Base Products Section -->
+                <section id="baseProductsSection" class="content-section">
+                    <div class="section-toolbar">
+                        <div class="toolbar-left">
+                            <select id="baseProductVendorFilter" class="form-select">
+                                <option value="all">All Vendors</option>
+                            </select>
+                            <select id="baseProductStockFilter" class="form-select">
+                                <option value="all">All Stock Levels</option>
+                                <option value="low">Low Stock</option>
+                                <option value="out">Out of Stock</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-right">
+                            <input type="text" id="baseProductSearch" class="form-input" placeholder="Search base products...">
+                            <button id="addBaseProductBtn" class="btn btn-primary">
+                                + Add Base Product
+                            </button>
+                        </div>
+                    </div>
+                    <div id="baseProductsTable">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Site Identity Section -->
+                <section id="siteIdentitySection" class="content-section">
+                    <div class="settings-container">
+                        <div class="settings-header">
+                            <h2>🎨 Site Identity</h2>
+                            <p>Customize your site's branding and identity</p>
+                        </div>
+
+                        <div class="settings-grid">
+                            <!-- Site Information -->
+                            <div class="settings-card">
+                                <h3>Site Information</h3>
+                                <div class="form-group">
+                                    <label for="siteName">Site Name</label>
+                                    <input type="text" id="siteName" class="form-input" placeholder="GronderfulBlogs">
+                                </div>
+                                <div class="form-group">
+                                    <label for="siteTagline">Tagline</label>
+                                    <input type="text" id="siteTagline" class="form-input" placeholder="Mystical treasures and occult wonders">
+                                </div>
+                                <div class="form-group">
+                                    <label for="siteDescription">Description</label>
+                                    <textarea id="siteDescription" class="form-input" rows="3" placeholder="Your mystical emporium for..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Logo & Favicon -->
+                            <div class="settings-card">
+                                <h3>Logo & Favicon</h3>
+                                <div class="form-group">
+                                    <label>Site Logo</label>
+                                    <div class="image-upload-zone" id="logoUpload" onclick="document.getElementById('logoInput').click()">
+                                        <div class="upload-icon">🖼️</div>
+                                        <p>Upload Logo</p>
+                                        <small>Recommended: 250x80px, PNG with transparency</small>
+                                    </div>
+                                    <input type="file" id="logoInput" accept="image/*" style="display: none;">
+                                    <div id="logoPreview" class="logo-preview"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Favicon</label>
+                                    <div class="image-upload-zone" id="faviconUpload" onclick="document.getElementById('faviconInput').click()">
+                                        <div class="upload-icon">⭐</div>
+                                        <p>Upload Favicon</p>
+                                        <small>Recommended: 32x32px, ICO or PNG</small>
+                                    </div>
+                                    <input type="file" id="faviconInput" accept="image/*" style="display: none;">
+                                    <div id="faviconPreview" class="favicon-preview"></div>
+                                </div>
+                            </div>
+
+                            <!-- Brand Colors -->
+                            <div class="settings-card">
+                                <h3>Brand Colors</h3>
+                                <div class="color-pickers">
+                                    <div class="color-picker-group">
+                                        <label>Primary Color</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="primaryColor" value="#8b5cf6">
+                                            <input type="text" id="primaryColorText" class="form-input" value="#8b5cf6">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker-group">
+                                        <label>Secondary Color</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="secondaryColor" value="#dc2626">
+                                            <input type="text" id="secondaryColorText" class="form-input" value="#dc2626">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker-group">
+                                        <label>Accent Color</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="accentColor" value="#fbbf24">
+                                            <input type="text" id="accentColorText" class="form-input" value="#fbbf24">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Media -->
+                            <div class="settings-card">
+                                <h3>Social Media Links</h3>
+                                <div class="form-group">
+                                    <label>Instagram</label>
+                                    <input type="url" id="socialInstagram" class="form-input" placeholder="https://instagram.com/yourshop">
+                                </div>
+                                <div class="form-group">
+                                    <label>Facebook</label>
+                                    <input type="url" id="socialFacebook" class="form-input" placeholder="https://facebook.com/yourshop">
+                                </div>
+                                <div class="form-group">
+                                    <label>Twitter/X</label>
+                                    <input type="url" id="socialTwitter" class="form-input" placeholder="https://twitter.com/yourshop">
+                                </div>
+                                <div class="form-group">
+                                    <label>TikTok</label>
+                                    <input type="url" id="socialTiktok" class="form-input" placeholder="https://tiktok.com/@yourshop">
+                                </div>
+                                <div class="form-group">
+                                    <label>Pinterest</label>
+                                    <input type="url" id="socialPinterest" class="form-input" placeholder="https://pinterest.com/yourshop">
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="settings-card">
+                                <h3>Contact Information</h3>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="contactEmail" class="form-input" placeholder="hello@YOUR_DOMAIN.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="contactPhone" class="form-input" placeholder="+1 (555) 123-4567">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea id="contactAddress" class="form-input" rows="2" placeholder="123 Mystical Lane..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-footer">
+                            <button class="btn btn-secondary" onclick="window.adminApp.loadSiteIdentity()">Reset</button>
+                            <button class="btn btn-primary" onclick="window.adminApp.saveSiteIdentity()">Save Changes</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Templates Section -->
+                <section id="templatesSection" class="content-section">
+                    <div class="settings-container">
+                        <div class="settings-header">
+                            <h2>🎭 Templates</h2>
+                            <p>Choose layouts and themes for your site</p>
+                        </div>
+
+                        <div class="templates-grid">
+                            <!-- Header Templates -->
+                            <div class="template-category">
+                                <h3>Header Layout</h3>
+                                <div class="template-options">
+                                    <div class="template-option" data-template="header-minimal">
+                                        <div class="template-preview">
+                                            <div class="preview-header minimal">
+                                                <div class="preview-logo">LOGO</div>
+                                                <div class="preview-nav">NAV</div>
+                                            </div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Minimal</h4>
+                                            <p>Clean and simple</p>
+                                        </div>
+                                        <input type="radio" name="headerTemplate" value="minimal" checked>
+                                    </div>
+                                    <div class="template-option" data-template="header-standard">
+                                        <div class="template-preview">
+                                            <div class="preview-header standard">
+                                                <div class="preview-logo">LOGO</div>
+                                                <div class="preview-nav">NAVIGATION</div>
+                                                <div class="preview-icons">🛒 👤</div>
+                                            </div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Standard</h4>
+                                            <p>Full navigation</p>
+                                        </div>
+                                        <input type="radio" name="headerTemplate" value="standard">
+                                    </div>
+                                    <div class="template-option" data-template="header-centered">
+                                        <div class="template-preview">
+                                            <div class="preview-header centered">
+                                                <div class="preview-logo center">LOGO</div>
+                                                <div class="preview-nav center">NAVIGATION</div>
+                                            </div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Centered</h4>
+                                            <p>Logo centered</p>
+                                        </div>
+                                        <input type="radio" name="headerTemplate" value="centered">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer Templates -->
+                            <div class="template-category">
+                                <h3>Footer Layout</h3>
+                                <div class="template-options">
+                                    <div class="template-option" data-template="footer-simple">
+                                        <div class="template-preview">
+                                            <div class="preview-footer simple">
+                                                <div class="preview-text">© 2024 • Links • Social</div>
+                                            </div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Simple</h4>
+                                            <p>Minimal footer</p>
+                                        </div>
+                                        <input type="radio" name="footerTemplate" value="simple" checked>
+                                    </div>
+                                    <div class="template-option" data-template="footer-detailed">
+                                        <div class="template-preview">
+                                            <div class="preview-footer detailed">
+                                                <div class="preview-columns">
+                                                    <div>COL 1</div>
+                                                    <div>COL 2</div>
+                                                    <div>COL 3</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Detailed</h4>
+                                            <p>Multi-column</p>
+                                        </div>
+                                        <input type="radio" name="footerTemplate" value="detailed">
+                                    </div>
+                                    <div class="template-option" data-template="footer-newsletter">
+                                        <div class="template-preview">
+                                            <div class="preview-footer newsletter">
+                                                <div class="preview-text">📧 Newsletter Signup</div>
+                                                <div class="preview-text small">Links • Social</div>
+                                            </div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Newsletter</h4>
+                                            <p>Email focused</p>
+                                        </div>
+                                        <input type="radio" name="footerTemplate" value="newsletter">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Color Schemes -->
+                            <div class="template-category">
+                                <h3>Color Scheme</h3>
+                                <div class="template-options">
+                                    <div class="template-option color-scheme" data-scheme="gothic-purple">
+                                        <div class="scheme-preview">
+                                            <div class="scheme-color" style="background: #8b5cf6"></div>
+                                            <div class="scheme-color" style="background: #0a0014"></div>
+                                            <div class="scheme-color" style="background: #dc2626"></div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Gothic Purple</h4>
+                                            <p>Default</p>
+                                        </div>
+                                        <input type="radio" name="colorScheme" value="gothic-purple" checked>
+                                    </div>
+                                    <div class="template-option color-scheme" data-scheme="blood-moon">
+                                        <div class="scheme-preview">
+                                            <div class="scheme-color" style="background: #dc2626"></div>
+                                            <div class="scheme-color" style="background: #1a0000"></div>
+                                            <div class="scheme-color" style="background: #fbbf24"></div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Blood Moon</h4>
+                                            <p>Red & gold</p>
+                                        </div>
+                                        <input type="radio" name="colorScheme" value="blood-moon">
+                                    </div>
+                                    <div class="template-option color-scheme" data-scheme="mystic-green">
+                                        <div class="scheme-preview">
+                                            <div class="scheme-color" style="background: #10b981"></div>
+                                            <div class="scheme-color" style="background: #001a0a"></div>
+                                            <div class="scheme-color" style="background: #8b5cf6"></div>
+                                        </div>
+                                        <div class="template-info">
+                                            <h4>Mystic Green</h4>
+                                            <p>Nature vibes</p>
+                                        </div>
+                                        <input type="radio" name="colorScheme" value="mystic-green">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-footer">
+                            <button class="btn btn-secondary" onclick="window.adminApp.loadTemplates()">Reset</button>
+                            <button class="btn btn-primary" onclick="window.adminApp.saveTemplates()">Save & Apply</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modules Section -->
+                <section id="modulesSection" class="content-section">
+                    <div class="settings-container">
+                        <div class="settings-header">
+                            <h2>🧩 Modules</h2>
+                            <p>Enable or disable features on your site</p>
+                        </div>
+
+                        <div class="modules-grid">
+                            <!-- E-commerce Module -->
+                            <div class="module-card" data-module="ecommerce">
+                                <div class="module-header">
+                                    <div class="module-icon">🛒</div>
+                                    <div class="module-info">
+                                        <h3>E-commerce</h3>
+                                        <p>Product catalog, shopping cart, and checkout</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleEcommerce" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-stats">
+                                    <span class="stat"><strong id="statsProducts">0</strong> Products</span>
+                                    <span class="stat"><strong id="statsOrders">0</strong> Orders</span>
+                                </div>
+                            </div>
+
+                            <!-- Blog Module -->
+                            <div class="module-card" data-module="blog">
+                                <div class="module-header">
+                                    <div class="module-icon">📝</div>
+                                    <div class="module-info">
+                                        <h3>Blog</h3>
+                                        <p>Create and publish blog posts and articles</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleBlog" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-stats">
+                                    <span class="stat"><strong id="statsPosts">0</strong> Posts</span>
+                                    <span class="stat"><strong id="statsViews">0</strong> Views</span>
+                                </div>
+                            </div>
+
+                            <!-- Newsletter Module -->
+                            <div class="module-card" data-module="newsletter">
+                                <div class="module-header">
+                                    <div class="module-icon">📧</div>
+                                    <div class="module-info">
+                                        <h3>Newsletter</h3>
+                                        <p>Email subscription forms and campaigns</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleNewsletter" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-stats">
+                                    <span class="stat"><strong id="statsSubscribers">0</strong> Subscribers</span>
+                                </div>
+                            </div>
+
+                            <!-- Reviews Module -->
+                            <div class="module-card" data-module="reviews">
+                                <div class="module-header">
+                                    <div class="module-icon">⭐</div>
+                                    <div class="module-info">
+                                        <h3>Reviews</h3>
+                                        <p>Customer product reviews and ratings</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleReviews" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-stats">
+                                    <span class="stat"><strong id="statsReviews">0</strong> Reviews</span>
+                                </div>
+                            </div>
+
+                            <!-- Wishlist Module -->
+                            <div class="module-card" data-module="wishlist">
+                                <div class="module-header">
+                                    <div class="module-icon">❤️</div>
+                                    <div class="module-info">
+                                        <h3>Wishlist</h3>
+                                        <p>Allow customers to save favorite items</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleWishlist" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Recommendations Module -->
+                            <div class="module-card" data-module="recommendations">
+                                <div class="module-header">
+                                    <div class="module-icon">🎯</div>
+                                    <div class="module-info">
+                                        <h3>Recommendations</h3>
+                                        <p>Smart product recommendations engine</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleRecommendations" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Comments Module -->
+                            <div class="module-card" data-module="comments">
+                                <div class="module-header">
+                                    <div class="module-icon">💬</div>
+                                    <div class="module-info">
+                                        <h3>Comments</h3>
+                                        <p>Blog post comments and discussions</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleComments" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-stats">
+                                    <span class="stat"><strong id="statsComments">0</strong> Comments</span>
+                                </div>
+                            </div>
+
+                            <!-- Analytics Module -->
+                            <div class="module-card" data-module="analytics">
+                                <div class="module-header">
+                                    <div class="module-icon">📊</div>
+                                    <div class="module-info">
+                                        <h3>Analytics</h3>
+                                        <p>Track shop and blog performance</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleAnalytics" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- SEO Tools Module -->
+                            <div class="module-card" data-module="seo">
+                                <div class="module-header">
+                                    <div class="module-icon">🔍</div>
+                                    <div class="module-info">
+                                        <h3>SEO Tools</h3>
+                                        <p>Meta tags, sitemaps, and schema markup</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleSEO" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Coupons Module -->
+                            <div class="module-card" data-module="coupons">
+                                <div class="module-header">
+                                    <div class="module-icon">🎫</div>
+                                    <div class="module-info">
+                                        <h3>Coupons</h3>
+                                        <p>Discount codes and promotional offers</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="moduleCoupons" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-stats">
+                                    <span class="stat"><strong id="statsCoupons">0</strong> Active</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-footer">
+                            <button class="btn btn-secondary" onclick="window.adminApp.loadModules()">Reset</button>
+                            <button class="btn btn-primary" onclick="window.adminApp.saveModules()">Save Changes</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Add Product</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+
+                    <div class="form-grid">
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label for="productName">Product Name *</label>
+                                <input type="text" id="productName" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productSlug">URL Slug *</label>
+                                <input type="text" id="productSlug" class="form-input" required>
+                                <small>Auto-generated from name, can be customized</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productCategory">Category *</label>
+                                <select id="productCategory" class="form-input" required>
+                                    <option value="">Select a category...</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productPrice">Price ($) *</label>
+                                    <input type="number" id="productPrice" class="form-input" step="0.01" min="0" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productComparePrice">Compare At Price ($)</label>
+                                    <input type="number" id="productComparePrice" class="form-input" step="0.01" min="0">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productStock">Stock Quantity *</label>
+                                <input type="number" id="productStock" class="form-input" min="0" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productDescription">Description</label>
+                                <textarea id="productDescription" class="form-input" rows="6"></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="productActive" checked>
+                                        <span>Active (visible on site)</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="productFeatured">
+                                        <span>Featured Product</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>Product Images</label>
+                                <div class="image-upload-zone" id="productImageUpload">
+                                    <div class="upload-icon">📸</div>
+                                    <p>Drag & drop images here or click to browse</p>
+                                    <small>Supports JPG, PNG, WebP (max 5MB each)</small>
+                                    <input type="file" id="productImageInput" accept="image/jpeg,image/png,image/webp" multiple style="display: none;">
+                                </div>
+
+                                <div id="productImageGallery" class="image-gallery">
+                                    <!-- Uploaded images appear here -->
+                                </div>
+
+                                <div id="productImageProgress" class="upload-progress" style="display: none;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <div class="progress-text">Uploading...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                <button type="submit" form="productForm" class="btn btn-primary">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Post Modal -->
+    <div id="blogModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="blogModalTitle">Add Blog Post</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="blogForm">
+                    <input type="hidden" id="blogId">
+
+                    <div class="form-group">
+                        <label for="blogTitle">Post Title *</label>
+                        <input type="text" id="blogTitle" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="blogSlug">URL Slug *</label>
+                        <input type="text" id="blogSlug" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="blogExcerpt">Excerpt</label>
+                        <textarea id="blogExcerpt" class="form-input" rows="3" maxlength="300"></textarea>
+                        <small>Brief summary for blog listings (max 300 characters)</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="blogCategory">Category</label>
+                            <input type="text" id="blogCategory" class="form-input" placeholder="e.g. Tarot, Spells, Crystals">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="blogTags">Tags</label>
+                            <input type="text" id="blogTags" class="form-input" placeholder="tag1, tag2, tag3">
+                            <small>Comma-separated keywords for SEO</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Content *</label>
+                        <div class="editor-wrapper">
+                            <div id="blogEditor"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Featured Image</label>
+                        <div class="image-upload-zone" id="blogImageUpload">
+                            <div class="upload-icon">📸</div>
+                            <p>Drag & drop featured image here or click to browse</p>
+                            <small>Supports JPG, PNG, WebP (max 5MB)</small>
+                            <input type="file" id="blogImageInput" accept="image/jpeg,image/png,image/webp" style="display: none;">
+                        </div>
+
+                        <div id="blogImageGallery" class="image-gallery">
+                            <!-- Featured image appears here -->
+                        </div>
+
+                        <div id="blogImageProgress" class="upload-progress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-text">Uploading...</div>
+                        </div>
+                    </div>
+
+                    <!-- SEO Settings (Collapsible) -->
+                    <div class="form-group seo-section">
+                        <div class="seo-header" onclick="toggleSEOSection()">
+                            <label>🔍 SEO Settings</label>
+                            <span class="seo-toggle">▼</span>
+                        </div>
+                        <div id="seoFields" class="seo-fields">
+                            <div class="form-group">
+                                <label for="blogMetaTitle">Meta Title</label>
+                                <input type="text" id="blogMetaTitle" class="form-input" placeholder="Optimized title for search engines (50-60 chars)" maxlength="60">
+                                <small>If empty, will use post title</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="blogMetaDescription">Meta Description</label>
+                                <textarea id="blogMetaDescription" class="form-input" rows="3" maxlength="160" placeholder="Compelling description for search results (150-160 chars)"></textarea>
+                                <small>If empty, will use excerpt</small>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="blogFocusKeyword">Focus Keyword</label>
+                                    <input type="text" id="blogFocusKeyword" class="form-input" placeholder="Primary SEO keyword">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogCanonicalUrl">Canonical URL</label>
+                                    <input type="text" id="blogCanonicalUrl" class="form-input" placeholder="https://YOUR_DOMAIN.com/blog/...">
+                                    <small>Optional - prevents duplicate content</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="blogOgImage">Open Graph Image (Social Media)</label>
+                                <input type="text" id="blogOgImage" class="form-input" placeholder="Image URL for social sharing">
+                                <small>If empty, will use featured image</small>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="blogNoIndex">
+                                    <span>No Index (Hide from search engines)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="blogAuthor">Author</label>
+                            <input type="text" id="blogAuthor" class="form-input" value="Admin">
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="blogPublished" checked>
+                                <span>Published (visible on site)</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                <button type="submit" form="blogForm" class="btn btn-primary">Save Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Modal - Dynamically created by admin.js -->
+
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="orderModalTitle">Order Details</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="orderDetails">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="userModalTitle">User Details</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="userDetails">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveUserBtn" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor Modal -->
+    <div id="vendorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="vendorModalTitle">Add Vendor</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="vendorForm">
+                    <input type="hidden" id="vendorId">
+
+                    <div class="form-group">
+                        <label for="vendorName">Vendor Name *</label>
+                        <input type="text" id="vendorName" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vendorEmail">Contact Email</label>
+                            <input type="email" id="vendorEmail" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vendorPhone">Contact Phone</label>
+                            <input type="tel" id="vendorPhone" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vendorAddress">Address</label>
+                        <textarea id="vendorAddress" class="form-input" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vendorNotes">Notes</label>
+                        <textarea id="vendorNotes" class="form-input" rows="4" placeholder="Payment terms, shipping info, etc."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                <button type="submit" form="vendorForm" class="btn btn-primary">Save Vendor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Base Product Modal -->
+    <div id="baseProductModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="baseProductModalTitle">Add Base Product</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="baseProductForm">
+                    <input type="hidden" id="baseProductId">
+
+                    <div class="form-grid">
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label for="baseProductVendor">Vendor *</label>
+                                <select id="baseProductVendor" class="form-input" required>
+                                    <option value="">Select a vendor...</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="baseProductName">Product Name *</label>
+                                <input type="text" id="baseProductName" class="form-input" required placeholder="e.g., Blank White Ceramic Mug">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="baseProductSku">SKU</label>
+                                <input type="text" id="baseProductSku" class="form-input" placeholder="e.g., MUG-WHT-11OZ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="baseProductDescription">Description</label>
+                                <textarea id="baseProductDescription" class="form-input" rows="4" placeholder="Size, material, specifications..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="baseProductPurchaseLink">Purchase Link</label>
+                                <input type="url" id="baseProductPurchaseLink" class="form-input" placeholder="https://vendor.com/product">
+                            </div>
+                        </div>
+
+                        <div class="form-column">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="baseProductStock">Current Stock *</label>
+                                    <input type="number" id="baseProductStock" class="form-input" min="0" required value="0">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="baseProductMinStock">Min Stock Level</label>
+                                    <input type="number" id="baseProductMinStock" class="form-input" min="0" placeholder="Reorder point">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="baseProductCostPerUnit">Latest Cost Per Unit ($)</label>
+                                <input type="number" id="baseProductCostPerUnit" class="form-input" step="0.01" min="0" placeholder="Auto-calculated from purchases">
+                                <small>This is auto-calculated but can be manually set</small>
+                            </div>
+
+                            <div class="purchase-history-section">
+                                <h4>Add Purchase Record</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="purchaseQuantity">Quantity</label>
+                                        <input type="number" id="purchaseQuantity" class="form-input" min="1" placeholder="100">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="purchaseTotalCost">Total Cost ($)</label>
+                                        <input type="number" id="purchaseTotalCost" class="form-input" step="0.01" min="0" placeholder="400.00">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="purchaseNotes">Purchase Notes</label>
+                                    <input type="text" id="purchaseNotes" class="form-input" placeholder="Batch #, invoice #, etc.">
+                                </div>
+
+                                <div class="cost-calculation" id="costCalculation" style="display: none;">
+                                    <div class="calc-result">
+                                        <strong>Cost Per Unit:</strong> $<span id="calculatedCostPerUnit">0.00</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" id="addPurchaseBtn" class="btn btn-secondary btn-sm">
+                                    + Add Purchase
+                                </button>
+                            </div>
+
+                            <div id="purchaseHistoryList" class="purchase-history-list">
+                                <!-- Populated with existing purchases -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                <button type="submit" form="baseProductForm" class="btn btn-primary">Save Base Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Details Modal -->
+    <div id="stockModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="stockModalTitle">Stock Details</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="stockDetails">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Modal (for dynamic content) -->
+    <div id="modal" class="modal"></div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="/firebase-config.js"></script>
+
+    <!-- Quill WYSIWYG Editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <!-- Browser Image Compression -->
+    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
+
+    <!-- Admin Script -->
+    <script type="module" src="/admin/admin.js"></script>
+    <script type="module" src="/admin/admin-users.js"></script>
+    <script type="module" src="/admin/admin-inventory.js"></script>
+    <script type="module" src="/admin/admin-product-base-products.js"></script>
+</body>
+</html>

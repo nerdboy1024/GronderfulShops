@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GronderfulShops - Your one-stop shop for amazing products. Quality items, great prices, excellent service.">
+    <meta name="keywords" content="shop, store, products, ecommerce, online shopping">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="GronderfulShops">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gronderfulshops.com/">
+    <meta property="og:title" content="GronderfulShops - Amazing Products, Great Prices">
+    <meta property="og:description" content="Your one-stop shop for amazing products. Quality items, great prices, excellent service.">
+    <meta property="og:image" content="https://gronderfulshops.com/favicon/android-chrome-512x512.png">
+    <meta property="og:site_name" content="GronderfulShops">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@gronderfulshops">
+    <meta name="twitter:title" content="GronderfulShops - Amazing Products, Great Prices">
+    <meta name="twitter:description" content="Your one-stop shop for amazing products. Quality items, great prices, excellent service.">
+    <meta name="twitter:image" content="https://gronderfulshops.com/favicon/android-chrome-512x512.png">
+
+    <title>GronderfulShops - Amazing Products, Great Prices</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="brand-icon">🛍️</span>
+                <h1>GronderfulShops</h1>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="#about">About</a></li>
+                <li class="cart-nav-item">
+                    <button class="cart-icon-btn" id="cartIconBtn" onclick="openCartModal()">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count" id="navCartCount">0</span>
+                    </button>
+                </li>
+
+                <!-- Auth Navigation Items -->
+                <li class="auth-nav-item" id="authNavGuest" style="display: none;">
+                    <a href="/auth.html" class="nav-auth-link">
+                        <span class="auth-icon">👤</span>
+                        Sign In
+                    </a>
+                </li>
+
+                <li class="auth-nav-item auth-dropdown" id="authNavUser" style="display: none;">
+                    <button class="nav-user-btn" id="navUserBtn">
+                        <span class="user-avatar" id="navUserAvatar">👤</span>
+                        <span class="user-name" id="navUserName">Account</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="auth-dropdown-menu" id="authDropdownMenu">
+                        <a href="/preferences.html" class="dropdown-item">
+                            <span>⚙️</span> My Preferences
+                        </a>
+                        <a href="#" id="adminLink" class="dropdown-item" style="display: none;">
+                            <span>⚔️</span> Admin Panel
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" id="navSignOut">
+                            <span>🚪</span> Sign Out
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to GronderfulShops</h1>
+            <p class="hero-subtitle">Quality Products, Amazing Prices</p>
+            <p class="hero-description">Electronics • Fashion • Home & Garden • Sports</p>
+            <div class="hero-buttons">
+                <a href="#shop" class="btn btn-primary">Browse Products</a>
+                <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="shop">
+        <div class="container">
+            <h2 class="section-title">Our Products</h2>
+            <p class="section-subtitle">Browse our curated collection of quality items</p>
+
+            <!-- Search Bar -->
+            <div class="shop-search">
+                <input type="text" id="shopSearchInput" class="search-input" placeholder="🔍 Search for products...">
+                <button id="clearSearchBtn" class="clear-search-btn" style="display: none;">✕</button>
+            </div>
+
+            <div class="shop-filters" id="shopFilters">
+                <button class="filter-btn active" data-filter="all">All Items</button>
+                <!-- Category filters loaded dynamically -->
+            </div>
+
+            <div class="shop-grid" id="shopGrid">
+                <!-- Products loaded dynamically from database -->
+                <div class="product-card" data-category="electronics">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x300/2563eb/ffffff?text=Product+1" alt="Sample Product">
+                        <div class="product-overlay">
+                            <button class="btn-quick-view">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sample Product</h3>
+                        <p class="product-description">High-quality item</p>
+                        <p class="product-price">$29.99</p>
+                        <button class="btn btn-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured">
+        <div class="container">
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <div class="card-icon">📦</div>
+                    <h3>Fast Shipping</h3>
+                    <p>Quick delivery to your doorstep</p>
+                </div>
+                <div class="featured-card">
+                    <div class="card-icon">✅</div>
+                    <h3>Quality Guaranteed</h3>
+                    <p>All products meet our quality standards</p>
+                </div>
+                <div class="featured-card">
+                    <div class="card-icon">🔒</div>
+                    <h3>Secure Payments</h3>
+                    <p>Your transactions are always protected</p>
+                </div>
+                <div class="featured-card">
+                    <div class="card-icon">💬</div>
+                    <h3>24/7 Support</h3>
+                    <p>We're here to help anytime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section id="recommendations" class="recommendations" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Recommended For You</h2>
+            <p class="section-subtitle">Products based on your interests</p>
+            <div class="recommendations-grid" id="recommendationsGrid"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/400x500/2563eb/ffffff?text=About+Us" alt="About Us">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title">About GronderfulShops</h2>
+                    <p>Welcome to GronderfulShops! We're passionate about bringing you the best products at competitive prices.</p>
+
+                    <p>Founded with a vision to make online shopping easy and enjoyable, we carefully curate our product selection to ensure quality and value for our customers.</p>
+
+                    <p>Our team is dedicated to providing excellent customer service and ensuring your satisfaction with every purchase.</p>
+
+                    <div class="about-specialties">
+                        <h3>Why Choose Us:</h3>
+                        <ul>
+                            <li>Wide Selection of Products</li>
+                            <li>Competitive Pricing</li>
+                            <li>Fast & Reliable Shipping</li>
+                            <li>Easy Returns & Exchanges</li>
+                            <li>Excellent Customer Support</li>
+                        </ul>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-icon">📷 Instagram</a>
+                        <a href="#" class="social-icon">📘 Facebook</a>
+                        <a href="#" class="social-icon">🐦 Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to receive updates, exclusive offers, and promotions</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>GronderfulShops</h4>
+                    <p>Your trusted destination for quality products.</p>
+                    <p class="footer-tagline">Shop with confidence</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#shop">All Products</a></li>
+                        <li><a href="#shop">New Arrivals</a></li>
+                        <li><a href="#shop">Best Sellers</a></li>
+                        <li><a href="#shop">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GronderfulShops. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-modal-overlay" onclick="closeCartModal()"></div>
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h2>Your Cart</h2>
+                <button class="cart-modal-close" onclick="closeCartModal()">✕</button>
+            </div>
+            <div class="cart-modal-body" id="cartModalBody"></div>
+            <div class="cart-modal-footer" id="cartModalFooter"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="script-firebase.js"></script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="profile-prompt.js"></script>
+    <script src="seo-utils.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.SEO) {
+                window.SEO.setHomepageSEO();
+            }
+        });
+    </script>
+</body>
+</html>
