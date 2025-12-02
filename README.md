@@ -225,6 +225,24 @@ Built with:
 
 ---
 
+## 🤖 Postmaster.Center Integration
+
+**100% Compatible with [Postmaster.Center](https://postmaster.center)**
+
+GronderfulShops is fully compatible with Postmaster.Center's AI-powered management features:
+
+- **AI Product Management** - Create, update, and manage products using natural language
+- **Remote API Access** - Full API key authentication for external management
+- **Inventory Control** - AI can monitor and update stock levels
+- **Order Processing** - View and manage orders through the API
+- **Category Management** - Organize products with AI assistance
+- **Coupon Generation** - Create and manage discount codes remotely
+- **Analytics Access** - Track sales and customer data remotely
+
+Simply connect your GronderfulShops API key to Postmaster.Center and let AI manage your online store.
+
+---
+
 ## 💬 Support
 
 - 📖 Check [docs/SETUP.md](docs/SETUP.md) for installation help
